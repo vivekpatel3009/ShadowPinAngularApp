@@ -1,0 +1,187 @@
+<div class="row">
+    <div class="col-sm-12">
+    <app-card [title]="'Filter'">
+                <div class="row form-group">
+                    <div class="col">
+                      <label class="col-form-label">Event</label>
+                    </div>
+                    <div class="col-sm-4">
+                      <ngx-select [items]="dropdownList"
+                      optionValueField="item_text"
+                      optionTextField="item_text"
+                      placeholder="Select Event"
+                      [multiple]="false"
+                      [(ngModel)]="eventId"
+                      (select)="doEventSelect($event)"></ngx-select>
+                    </div>
+                    <div class="col-sm-2"></div>
+                      <div class="col">
+                        <label class="col-form-label">Device</label>
+                      </div>
+                      <div class="col-sm-4">
+                         <ngx-select [items]="dropdownList"
+                         optionValueField="DeviceName"
+                         optionTextField="DeviceName"
+                         placeholder="Select Device"
+                         [multiple]="false"
+                         [(ngModel)]="DeviceId"
+                         (select)="doDeviceSelect($event)"></ngx-select>
+                      </div>
+                    </div>
+      </app-card>
+    </div>
+    </div>
+<div class="row">
+<div class="col-sm-12">
+<app-card [title]="'Scheduler List'">
+    <div class="addbutton">
+        <button type="button" style="float: right;" class="btn btn-primary" (click)="modalMulti1.show()" *ngIf="authService.checkRights(currentstate.state,mode.Create)">Add new Schedule</button>
+    </div>
+
+    <div class="filtertext">
+        <input type="text" class="form-control" placeholder="Search">
+    </div>
+     
+     <!-- modal 1 -->
+     <app-modal-basic #modalMulti1 [dialogClass]="'modal-lg'">
+       <div class="app-modal-header">
+         <h4 class="modal-title">Add Event Schedule</h4>
+         <button type="button" class="close basic-close" (click)="modalMulti1.hide()">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="app-modal-body">
+         <div class="col-sm-12">
+         <div class="col-sm-6" style="float: left;"> 
+            <div class="row form-group">
+                <div class="col-sm-4"style="float: left;">
+                  <label class="col-form-label">Event On</label>
+                </div>
+                <div class="col-sm-8"style="float: right;">
+                  <input  class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Event On">
+                  <owl-date-time #dt1 ></owl-date-time>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                  <div class="col-sm-4"style="float: left;">
+                    <label class="col-form-label">Device ID</label>
+                  </div>
+                  <div class="col-sm-8"style="float: right;">
+                    <ngx-select [items]="dropdownList"
+                    optionValueField="item_id"
+                    optionTextField="item_text"
+                    placeholder="Select Device"
+                    [multiple]="false"
+                    ></ngx-select>
+                  </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-4"style="float: left;">
+                      <label class="col-form-label">Event</label>
+                    </div>
+                    <div class="col-sm-8"style="float: right;">
+               
+                      <ngx-select [items]="dropdownList"
+                      optionValueField="item_id"
+                      optionTextField="item_text"
+                      placeholder="Select Event"
+                      [multiple]="false"
+                      ></ngx-select>
+                    </div>
+                  </div>
+
+         </div>
+         <div class="col-sm-6" style="float: right;">
+            <div class="form-group">
+               
+                <perfect-scrollbar class="overflow-container" [style.width]="'100%'" [style.height]="'300px'" [config]="config">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                          <th class="text-center"></th>
+                          <th class="text-center">Event Recipients</th>
+                          <th class="text-center"> <button data-toggle="modal" (click)="openAjaxSwal()" class="btn btn-primary ripple light event-recipients">+</button></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of DeviceList">
+                          <td class="text-center">
+                            <div class="checkbox-fade fade-in-primary">
+                              <label>
+                                <input type="checkbox" value="">
+                                <span class="cr">
+                                  <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                </span> 
+                              </label>
+                            </div>
+                          </td>
+                          <td class="text-center">{{item.EventRecipients}}</td>
+                          <td class="text-center">
+                              <a class="text-default" ><i class="icofont icofont-ui-delete f-20"></i></a>
+                          </td>
+                        </tr>
+                        
+                        </tbody>
+                      </table>
+                  </perfect-scrollbar>
+               
+              </div>
+           
+
+         </div>
+        </div>
+       </div>
+       <div class="app-modal-footer">
+         <button type="button" class="btn btn-default ripple" (click)="modalMulti1.hide()">Close</button>
+         <button type="button" class="btn btn-primary ripple light">Save changes</button>
+       </div>
+     </app-modal-basic>
+      
+
+
+      <div class="table-responsive" style="margin-top:15px">
+              <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th class="text-center">Date/Time of Event</th>
+                  <th class="text-center">Device ID</th>
+                  <th class="text-center">Event</th>
+                  <th class="text-center">Event Recipients</th>
+                  <th class="text-center" *ngIf="authService.checkRights(currentstate.state,mode.Edit) || authService.checkRights(currentstate.state,mode.Delete)">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of DeviceList_temp| paginate: { itemsPerPage: 10, currentPage: objcurrentpage }">
+                  <th class="text-center" scope="row">1</th>
+                  <td class="text-center">{{item.EventOn}}</td>
+                  <td class="text-center">{{item.DeviceName}}</td>
+                  <td class="text-center">{{item.EventName}}</td>
+                  <td class="text-center">{{item.EventRecipients}}</td>
+                  <td class="text-center" *ngIf="authService.checkRights(currentstate.state,mode.Edit) || authService.checkRights(currentstate.state,mode.Delete)">
+                      <a class="text-default" (click)="modalMulti1.show()" *ngIf="authService.checkRights(currentstate.state,mode.Edit)"><i class="icofont icofont-ui-edit f-20"></i></a>
+                      <a class="text-default" ><i class="icofont icofont-ui-delete f-20" *ngIf="authService.checkRights(currentstate.state,mode.Delete)"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+         <pagination-controls (pageChange)="objcurrentpage = $event"></pagination-controls>  
+          <!-- <pagination-controls  id="55"
+                (pageChange)="pageChanged($event)"
+                maxSize="9"
+                directionLinks="true"
+                autoHide="true"
+                responsive="true"
+                previousLabel="Previous"
+                nextLabel="Next"
+                screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page"
+                screenReaderCurrentLabel="You're on page">
+          </pagination-controls> -->
+
+  </app-card>
+</div>
+</div>

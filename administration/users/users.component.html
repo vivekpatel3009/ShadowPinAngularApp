@@ -1,0 +1,59 @@
+<div class="row">
+<div class="col-sm-12">
+<app-card [title]="'User List'">
+
+    <div class="addbutton">
+        <button class="btn btn-primary"  [routerLink]="['/administration/user/add']" *ngIf="authService.checkRights(currentstate.state,mode.Create)">Add new user</button>
+    </div>
+
+    <div class="filtertext">
+        <input type="text" class="form-control" placeholder="Search" name="strsearch" [(ngModel)]="strsearch">
+    </div>
+    
+      <div class="table-responsive" style="margin-top:15px">
+              <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th class="text-center">Name</th>
+                  <th class="text-center">Account Name</th>
+                  <th class="text-center">User Role</th>
+                  <th class="text-center">Email</th>
+                  <th class="text-center">Phone</th>
+                  <th class="text-center" *ngIf="authService.checkRights(currentstate.state,mode.Edit) || authService.checkRights(currentstate.state,mode.Delete)">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of userList|  filter : strsearch |paginate: { itemsPerPage: 10, currentPage: objcurrentpage }">
+                  <td class="text-center">{{item.Id}}</td>
+                  <td class="text-center">{{item.FirstName +' '+ item.LastName}}</td>   
+                  <td class="text-center">{{item.AccountName}}</td>
+                  <td class="text-center">{{item.RoleName}}</td>                           
+                  <td class="text-center">{{item.Email}}</td>
+                  <td class="text-center">{{item.Phone}}</td>
+                  <td class="text-center" *ngIf="authService.checkRights(currentstate.state,mode.Edit) || authService.checkRights(currentstate.state,mode.Delete)">
+                      <a class="text-default" [routerLink]="['/administration/user/edit',1]" *ngIf="authService.checkRights(currentstate.state,mode.Edit)" ><i class="icofont icofont-ui-edit f-20"></i></a>
+                      <a class="text-default" *ngIf="authService.checkRights(currentstate.state,mode.Delete)" ><i class="icofont icofont-ui-delete f-20"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+         <pagination-controls (pageChange)="objcurrentpage = $event"></pagination-controls>  
+          <!-- <pagination-controls  id="55"
+                (pageChange)="pageChanged($event)"
+                maxSize="9"
+                directionLinks="true"
+                autoHide="true"
+                responsive="true"
+                previousLabel="Previous"
+                nextLabel="Next"
+                screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page"
+                screenReaderCurrentLabel="You're on page">
+          </pagination-controls> -->
+
+  </app-card>
+</div>
+</div>

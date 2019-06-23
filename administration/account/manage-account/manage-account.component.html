@@ -1,0 +1,401 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="md-tabs">
+      <ngb-tabset [justify]="'fill'">
+        <ngb-tab title="{{PageTitle}}">
+          <ng-template ngbTabContent>
+            <div class="m-t-15">
+              <!-- personal card start -->
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-header-text">About Me</h5>
+                </div>
+                <div class="card-body ">
+                  <form role="form" [formGroup]="accountForm" (ngSubmit)="onSubmitClick()" novalidate>
+                    <div class="row">
+                      <input type="hidden" class="form-control" formControlName="Id" name="Id" [(ngModel)]="objaccount.Id">
+                    
+                      <div class="form-group  col-sm-6">
+                        <label class="col-sm-3 col-form-label">Account Name</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" formControlName="AccountName" placeholder="Account Name" name="AccountName" [(ngModel)]="objaccount.AccountName"
+                            [ngClass]="{'is-invalid': submited && accountForm.controls.AccountName.errors}">
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['AccountName']) &&submited">
+                            Account name is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Description</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" formControlName="AccountDescription" placeholder="Description" name="AccountDescription"
+                            [(ngModel)]="objaccount.AccountDescription" [ngClass]="{'is-invalid': submited && accountForm.controls.AccountDescription.errors}">
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['AccountDescription']) &&submited">
+                            Account Description is required.
+                          </div>
+                        </div>
+                      </div>
+                        <div class="form-group  col-sm-6">
+                        <label class="col-sm-3 col-form-label">First Name</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" formControlName="AdminFirstName" placeholder="First Name" name="AdminFirstName" [(ngModel)]="objaccount.AdminFirstName"
+                            [ngClass]="{'is-invalid': submited && accountForm.controls.AdminFirstName.errors}">
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['AdminFirstName']) &&submited">
+                            First name is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Last Name</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" formControlName="AdminLastName" [(ngModel)]="objaccount.AdminLastName" placeholder="Last Name"
+                            [ngClass]="{'is-invalid': submited && accountForm.controls.AdminLastName.errors}">
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['AdminLastName']) &&submited">
+                            Last name is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Email</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Contact Email" formControlName="AdminEmail" [(ngModel)]="objaccount.AdminEmail"
+                            [ngClass]="{'is-invalid': submited && accountForm.controls.AdminEmail.errors}">
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['AdminEmail']) &&submited">
+                            Email is required.
+                          </div>
+                          <div class="messages text-danger" *ngIf="!accountForm.hasError('required', ['AdminEmail']) && accountForm.hasError('email', ['AdminEmail'])submited">
+                            Invalid Email
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Phone</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Phone " formControlName="AdminPhone" [(ngModel)]="objaccount.AdminPhone"
+                            [ngClass]="{'is-invalid': submited && accountForm.controls.AdminPhone.errors}">
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['AdminPhone']) &&submited">
+                            Phone is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Notify Email</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Notification Email" formControlName="NotificationEmail" [(ngModel)]="objaccount.NotificationEmail"
+                            [ngClass]="{'is-invalid': submited && accountForm.controls.NotificationEmail.errors}">
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['NotificationEmail']) &&submited">
+                            Notification Email is required.
+                          </div>
+                          <div class="messages text-danger" *ngIf="!accountForm.hasError('required', ['NotificationEmail']) && accountForm.hasError('email', ['NotificationEmail'])submited">
+                            Invalid Email
+                          </div>
+                        </div>
+                      </div>
+                 
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Time Zone</label>
+                        <div class="col-sm-9 single-selection">
+                          <div [ngClass]="{'is-invalid-option': submited && accountForm.controls.TimezoneId.errors}">
+                            <ngx-select [items]="lstTimezoneItems" optionValueField="Id" optionTextField="Timezone" placeholder="Select Time Zone" [multiple]="false"
+                              [(ngModel)]="objaccount.TimezoneId" formControlName="TimezoneId">
+                            </ngx-select>
+                          </div>
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['TimezoneId']) &&submited">
+                            Timezone is required.
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Distance Units</label>
+                        <div class="col-sm-9 single-selection">
+                          <ngx-select [items]="lstLookupItems" optionValueField="Id" optionTextField="Name" placeholder="Select Distance Units" [multiple]="false"
+                            [(ngModel)]="objaccount.DistanceUnitId" formControlName="DistanceUnitId">
+                          </ngx-select>
+                        </div>
+                      </div>
+                     
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Temperature Units</label>
+                        <div class="col-sm-9 single-selection">
+                          <ngx-select [items]="lstLookupItems" optionValueField="Id" optionTextField="Name" placeholder="Select Temperature Unit" [multiple]="false"
+                            [(ngModel)]="objaccount.TemperatureUnitId" formControlName="TemperatureUnitId">
+                          </ngx-select>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Lat/Long Format</label>
+                        <div class="col-sm-9 single-selection">
+                          <ngx-select [items]="lstLookupItems" optionValueField="Id" optionTextField="Name" placeholder="Latitude/Longitude Formate"
+                            [multiple]="false" [(ngModel)]="objaccount.LatLongFormatUnitId" formControlName="LatLongFormatUnitId">
+                          </ngx-select>
+                        </div>
+                      </div>
+                    </div>
+                    <h4 class="sub-title">Head office address</h4>
+                    <div class="row">
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Address</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Address" [(ngModel)]="objaccount.HOAddress" formControlName="HOAddress"
+                            [ngClass]="{'is-invalid': submited && accountForm.controls.HOAddress.errors}">
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['HOAddress']) &&submited">
+                            Address is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Country</label>
+                        <div class="col-sm-9">
+                          <div [ngClass]="{'is-invalid-option': submited && accountForm.controls.HOCountryId.errors}">
+                            <ngx-select [items]="lstHOCountryItems" optionValueField="Id" optionTextField="CountryName" placeholder="Select Country"
+                              [multiple]="false" [(ngModel)]="objaccount.HOCountryId" formControlName="HOCountryId" (select)="getStatebyCountry(objaccount.HOCountryId,'HO')">
+                            </ngx-select>
+                          </div>
+
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['HOCountryId']) &&submited">
+                            Country is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Province</label>
+                        <div class="col-sm-9">
+                          <div [ngClass]="{'is-invalid-option': submited && accountForm.controls.HOProvinceId.errors}">
+                            <ngx-select [items]="lstHOProvinceItems" optionValueField="Id" optionTextField="ProvinceName" placeholder="Select Province"
+                              [multiple]="false" [(ngModel)]="objaccount.HOProvinceId" formControlName="HOProvinceId" [ngClass]="{'is-invalid': submited && accountForm.controls.HOProvinceId.errors}"
+                              [disabled]="IsHOProvinceDisable" (select)="getCityforDropDown(objaccount.HOProvinceId,'HO')">
+                            </ngx-select>
+                          </div>
+
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['HOProvinceId']) &&submited">
+                            Province is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label"> City</label>
+                        <div class="col-sm-9">
+                          <div [ngClass]="{'is-invalid-option': submited && accountForm.controls.HOCityId.errors}">
+                            <ngx-select [items]="lstHOCityItems" optionValueField="Id" optionTextField="CityName" placeholder="Select City" [multiple]="false"
+                              [(ngModel)]="objaccount.HOCityId" formControlName="HOCityId" [ngClass]="{'is-invalid': submited && accountForm.controls.HOCityId.errors}"
+                              [disabled]="IsHOCityDisable" (select)="GetZipCode(objaccount.HOCityId,'HO')">
+                            </ngx-select>
+                          </div>
+
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['HOCityId']) &&submited">
+                            City is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">ZipCode</label>
+                        <div class="col-sm-9">
+                            <div [ngClass]="{'is-invalid-option': submited && accountForm.controls.HOZipId.errors}">
+                              <ngx-select [items]="lstHOZipItems" optionValueField="Id" optionTextField="Zipcode" placeholder="Select Zip Code" [multiple]="false"
+                              formControlName="HOZipId" [(ngModel)]="objaccount.HOZipId" [disabled]="IsHOZipDisable">
+                            </ngx-select>
+                          </div>
+                            <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['HOZipId']) &&submited">
+                            ZipCode is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Phone</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Phone" [(ngModel)]="objaccount.HOPhone" formControlName="HOPhone" [ngClass]="{'is-invalid': submited && accountForm.controls.HOPhone.errors}">
+                          <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['HOPhone']) &&submited">
+                            Phone is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <h4 class="sub-title">Billing address</h4>
+                    
+                    <div class="form-group row">
+                      <div class="col-sm-10">
+                        <div class="checkbox-fade fade-in-primary">
+                          <label>
+                            
+                            <input type="checkbox" value="true" id="chksamebillingaddress" 
+                              formControlName="BillingAddSameAsHOAdd" 
+                              [(ngModel)]="objaccount.BillingAddSameAsHOAdd"
+                              (change)="checkBillingAddress($event.target.checked)"  
+                              [attr.disabled]="objaccount.HOAddress=='' || objaccount.HOCountryId=='' || objaccount.HOProvinceId=='' || objaccount.HOCityId=='' || objaccount.HOZipId=='' || objaccount.HOPhone=='' ? true : null " 
+                              [ngClass]="{'checkbox-disable': objaccount.HOAddress=='' || objaccount.HOCountryId=='' || objaccount.HOProvinceId=='' || objaccount.HOCityId=='' || objaccount.HOZipId=='' || objaccount.HOPhone=='' }">
+                            <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                            <span>Billing address same as head office address</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                      <div class="row " >
+                        <div class="form-group col-sm-6">
+                          <label class="col-sm-3 col-form-label">Address</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Address" formControlName="BillingAddress" [(ngModel)]="objaccount.BillingAddress" [attr.disabled]="objaccount.BillingAddSameAsHOAdd ? true : null"
+                            [ngClass]="{'is-invalid': submited && accountForm.controls.BillingAddress.errors}">
+
+                            <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['BillingAddress']) &&submited">
+                              Billing Address is required.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                          <label class="col-sm-3 col-form-label">Country</label>
+                          <div class="col-sm-9">
+                              <div [ngClass]="{'is-invalid-option': submited && accountForm.controls.BillingCountryId.errors}">
+                                  <ngx-select [items]="lstBillingCountryItems" optionValueField="Id" optionTextField="CountryName" placeholder="Select Country"
+                                  [multiple]="false" formControlName="BillingCountryId" [(ngModel)]="objaccount.BillingCountryId"
+                                  (select)="getStatebyCountry(objaccount.BillingCountryId,'Billing')" [disabled]="objaccount.BillingAddSameAsHOAdd ? true : null">
+                                </ngx-select>
+                                </div>
+                            <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['BillingCountryId']) &&submited">
+                              Billing Country is required.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                          <label class="col-sm-3 col-form-label">Province</label>
+                          <div class="col-sm-9">
+                              <div [ngClass]="{'is-invalid-option': submited && accountForm.controls.BillingProvinceId.errors}">
+                                  <ngx-select [items]="lstBillingProvinceItems" optionValueField="Id" optionTextField="ProvinceName" placeholder="Select Province"
+                                  [multiple]="false" formControlName="BillingProvinceId" [(ngModel)]="objaccount.BillingProvinceId"
+                                  (select)="getCityforDropDown(objaccount.BillingProvinceId,'Billing')" [disabled]="IsBillingProvinceDisable || objaccount.BillingAddSameAsHOAdd ? true : null ">
+                                </ngx-select>
+                                </div>
+                            <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['BillingProvinceId']) &&submited">
+                                Billing Province is required.
+                              </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                          <label class="col-sm-3 col-form-label"> City</label>
+                          <div class="col-sm-9">
+                              <div [ngClass]="{'is-invalid-option': submited && accountForm.controls.BillingCityId.errors}">
+                                  <ngx-select [items]="lstBillingCityItems" optionValueField="Id" optionTextField="CityName" placeholder="Select City" [multiple]="false"
+                                  formControlName="BillingCityId" [(ngModel)]="objaccount.BillingCityId" [disabled]="IsBillingCityDisable || objaccount.BillingAddSameAsHOAdd ? true : null "
+                                  (select)="GetZipCode(objaccount.BillingCityId,'Billing')">
+                                </ngx-select>
+                                </div>
+                            <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['BillingCityId']) &&submited">
+                                Billing Province is required.
+                              </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                          <label class="col-sm-3 col-form-label">ZipCode</label>
+                          <div class="col-sm-9">
+                              <div [ngClass]="{'is-invalid-option': submited && accountForm.controls.BillingZipId.errors}">
+                                  <ngx-select [items]="lstBillingZipItems" optionValueField="Id" optionTextField="Zipcode" placeholder="Select Zip Code" [multiple]="false"
+                                  formControlName="BillingZipId" [(ngModel)]="objaccount.BillingZipId" [disabled]="IsBillingZipDisable || objaccount.BillingAddSameAsHOAdd ? true : null ">
+                                </ngx-select>
+                                </div>
+                            <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['BillingZipId']) &&submited">
+                                Billing Zip is required.
+                              </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                          <label class="col-sm-3 col-form-label">Phone</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Phone" formControlName="BillingPhone" [(ngModel)]="objaccount.BillingPhone" [attr.disabled]="objaccount.BillingAddSameAsHOAdd ? true : null"
+                            [ngClass]="{'is-invalid': submited && accountForm.controls.BillingPhone.errors}">
+                            <div class="messages text-danger" *ngIf="accountForm.hasError('required', ['BillingPhone']) &&submited">
+                                Billing Phone is required.
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="form-group row" style="float: right;padding: 15px;">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </form>
+                </div>
+                <!-- end of card-body -->
+              </div>
+              <!-- personal card end-->
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Contact" *ngIf="operationType.value.mode == 'edit'">
+          <ng-template ngbTabContent>
+            <div class="m-t-15">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-header-text">Contact</h5>
+                </div>
+               
+                <div class="card-body">
+
+                    <div class="filtertext">
+                        <input type="text" class="form-control" placeholder="Search" name="strsearch" [(ngModel)]="strsearch">
+                      </div>
+
+                  <div class="table-responsive" style="margin-top:15px">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th class="text-center">#</th>
+                          <th class="text-center">Name</th>
+                          <th class="text-center">Email</th>
+                          <th class="text-center">Phone</th>
+                          <th class="text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of objaccount.objUserList | filter : strsearch   | paginate: { itemsPerPage: pageSize, currentPage: currentPage,totalItems: totalNumberOfRecords }">
+                          <td class="text-center">{{item.Id}}</td>
+                          <td class="text-center">{{item.FirstName +' '+ item.LastName}}</td>
+                          <td class="text-center">{{item.Email}}</td>
+                          <td class="text-center">{{item.Phone}}</td>
+                          <td class="text-center">
+                            <a class="text-default" [routerLink]="['/administration/user/edit',item.Id]"><i class="icofont icofont-ui-edit f-20"></i></a>
+                            <a class="text-default"><i class="icofont icofont-ui-delete f-20"></i></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    
+                    <div class="text-center" *ngIf="objaccount.objUserList.length==0">
+                        <h5>
+                            <label class="label label-info">No Record found !</label>
+                        </h5>
+                      </div>
+                      <div class="text-center"*ngIf="(objaccount.objUserList | filter: strsearch).length === 0 && objaccount.objUserList.length!=0 ">
+                          <h5>
+                              <label class="label label-info">No Match found !</label>
+                          </h5>
+                        </div>
+                  </div>
+
+                  <label style="float:left; padding: 10px 10px 0 0;">Records Par Page</label>
+                  <select name="select" (change)="pagesizechange($event.target.value)" class="form-control" style="float:left;width: 10%;padding-bottom: 10px">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                  
+                  <pagination-controls 
+                    (pageChange)="pagechange($event)"
+                    directionLinks="true"
+                    responsive="true"
+                    previousLabel="Previous"
+                    nextLabel="Next"
+                    screenReaderPaginationLabel="Pagination"
+                    screenReaderPageLabel="page"
+                    screenReaderCurrentLabel="You're on page">
+                  </pagination-controls>
+                  
+
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,225 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <span>
+      <h3>Add Vehicle</h3>
+    </span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- <div class="form-group row">
+  <label class="col-sm-2 col-form-label">Vehicle ID</label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" placeholder="Vehicle ID" readonly>
+  </div>
+  </div> -->
+        <form role="form" [formGroup]="vehicleForm" (ngSubmit)="onSubmitClick()" novalidate>
+          <div class="row">
+            <!-- <div class="form-group col-sm-6">
+  <label class="col-sm-3 col-form-label">Fleets</label>
+  <div class="col-sm-9 single-selection">
+  <ngx-select [items]="lstFleets"
+  optionValueField="item_id"
+  optionTextField="item_text"
+  placeholder="Select Fleet"
+  [multiple]="false"
+  [(ngModel)]="FleetId">
+  </ngx-select>
+  </div>
+  </div> -->
+  <input type="hidden" class="form-control" formControlName="Id" name="Id" [(ngModel)]="objVehicle.Id">
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">Fleets</label>
+              <div class="col-sm-9 single-selection">
+                <div [ngClass]="{'is-invalid-option': submited && vehicleForm.controls.FleetId.errors}">
+                  <ngx-select [items]="lstFleets" optionValueField="Id" optionTextField="FleetName" placeholder="Select Fleets"
+                    [multiple]="false" [(ngModel)]="objVehicle.FleetId" formControlName="FleetId">
+                  </ngx-select>
+                </div>
+
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['FleetId']) &&submited">
+                  Fleets is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">FleetPushpin</label>
+              <div class="col-sm-9 single-selection">
+                <div [ngClass]="{'is-invalid-option': submited && vehicleForm.controls.FleetPushpinID.errors}">
+                  <ngx-select [items]="lstFleetPushpin" optionValueField="Id" optionTextField="Name" placeholder="Select FleetPushpin"
+                    [multiple]="false" [(ngModel)]="objVehicle.FleetPushpinID" formControlName="FleetPushpinID">
+                  </ngx-select>
+                </div>
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['FleetPushpinID']) &&submited">
+                  Fleets is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">UniqueID</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="UniqueID" formControlName="UniqueId" [(ngModel)]="objVehicle.UniqueId"
+                  [ngClass]="{'is-invalid': submited && vehicleForm.controls.UniqueId.errors}">
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['UniqueId']) &&submited">
+                  UniqueID is required.
+                </div>
+              </div>
+            </div>
+            <!-- <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="Vehicle Name" formControlName="FirstName" name="FirstName"
+                  [(ngModel)]="objVehicle.FirstName" [ngClass]="{'is-invalid': submited && vehicleForm.controls.FirstName.errors}">
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['FirstName']) &&submited">
+                  Name is required.
+                </div>
+              </div>
+            </div> -->
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">Description</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="Vehicle VehicleDescription" formControlName="VehicleDescription"
+                  name="VehicleDescription" [(ngModel)]="objVehicle.VehicleDescription" [ngClass]="{'is-invalid': submited && vehicleForm.controls.VehicleDescription.errors}">
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['VehicleDescription']) &&submited">
+                  Description is required.
+                </div>
+              </div>
+            </div>
+          
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">Carrier Type</label>
+              <div class="col-sm-9 single-selection">
+                  <div [ngClass]="{'is-invalid-option': submited && vehicleForm.controls.EquipmentTypeId.errors}">
+                <ngx-select [items]="lstEquipmentType" optionValueField="Id" optionTextField="Name" placeholder="Select Carrier Type"
+                formControlName="EquipmentTypeId"
+                  [multiple]="false" [(ngModel)]="objVehicle.EquipmentTypeId">
+                </ngx-select>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">Equipment Status</label>
+              <div class="col-sm-9 single-selection">
+                  <!-- <div [ngClass]="{'is-invalid-option': submited && vehicleForm.controls.EquipmentTypeId.errors}"> -->
+                <ngx-select [items]="lstEquipmentStatus" optionValueField="Id" optionTextField="Name"
+                  placeholder="Select Equipment Status" [multiple]="false" [(ngModel)]="objVehicle.EquipmentStatusId" formControlName="EquipmentStatusId">
+                </ngx-select>
+              <!-- </div> -->
+            </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">DeviceID</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="DeviceID" formControlName="DeviceTypeId" name="DeviceTypeId"
+                  [(ngModel)]="objVehicle.DeviceTypeId" [ngClass]="{'is-invalid': submited && vehicleForm.controls.DeviceTypeId.errors}">
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['DeviceTypeId']) &&submited">
+                  DeviceID is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">SIM Phone Number</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="SIM Phone Number" formControlName="SIMPhoneNumber"
+                  name="SIMPhoneNumber" [(ngModel)]="objVehicle.SIMPhoneNumber" [ngClass]="{'is-invalid': submited && vehicleForm.controls.SIMPhoneNumber.errors}">
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['SIMPhoneNumber']) &&submited">
+                  SIM Phone Number is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">IMEI/ESN number</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="IMEI/ESN number" formControlName="IMEIOrESN"
+                  name="IMEI/ESNnumber" [(ngModel)]="objVehicle.IMEIOrESN" [ngClass]="{'is-invalid': submited && vehicleForm.controls.IMEIOrESN.errors}">
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['IMEIOrESN']) &&submited">
+                  IMEI/ESN number is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">SerialNumber</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="Serial Number" formControlName="SerialNumber" name="SerialNumber"
+                  [(ngModel)]="objVehicle.SerialNumber" [ngClass]="{'is-invalid': submited && vehicleForm.controls.SerialNumber.errors}">
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['SerialNumber']) &&submited">
+                  Serial Number is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">PP</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="PP" formControlName="PP" name="PP" [(ngModel)]="objVehicle.PP"
+                  [ngClass]="{'is-invalid': submited && vehicleForm.controls.PP.errors}">
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['PP']) &&submited">
+                    PP is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">IP</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="IP" formControlName="IP" name="IP" [(ngModel)]="objVehicle.IP"
+                  [ngClass]="{'is-invalid': submited && vehicleForm.controls.IP.errors}">
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['IP']) &&submited">
+                  IP is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">TU</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="TU" formControlName="TU" name="TU" [(ngModel)]="objVehicle.TU"
+                  [ngClass]="{'is-invalid': submited && vehicleForm.controls.TU.errors}">
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['TU']) &&submited">
+                  TU is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">SM</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="SM" formControlName="SM" name="SM" [(ngModel)]="objVehicle.SM"
+                  [ngClass]="{'is-invalid': submited && vehicleForm.controls.SM.errors}">
+                <div class="messages text-danger" *ngIf="vehicleForm.hasError('required', ['SM']) &&submited">
+                  SM is required.
+                </div>
+              </div>
+            </div>
+            <!-- <div class="form-group col-sm-6">
+              <label class="col-sm-3 col-form-label">Status</label>
+              <div class="col-sm-9">
+                <div class="form-radio">
+                  <div class="radio radio-inline">
+                    <label>
+                      <input type="radio" name="Status" [(ngModel)]="objVehicle.Status" formControlName="Status" value="true" [checked]="objVehicle.Status==true">
+                      <i class="helper"></i>
+                      Active
+                    </label>
+                  </div>
+                  <div class="radio radio-inline">
+                    <label>
+                        <input type="radio" name="Status" [(ngModel)]="objVehicle.Status" formControlName="Status" value="false" [checked]="objVehicle.Status==false">
+                      <i class="helper"></i>
+                      Inactive
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+            </div> -->
+          </div>
+          <div class="form-group row" style="float: right;padding: 15px;">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </form>
+        <!-- end of card-body -->
+      </div>
+    </div>
+  </div>
+</div>

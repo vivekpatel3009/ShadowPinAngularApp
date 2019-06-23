@@ -1,0 +1,77 @@
+<div class="row">
+<div class="col-sm-12">
+<app-card [title]="'Geozone List'">
+  
+    <div class="addbutton">
+        <button class="btn btn-primary"  style="float: right;" [routerLink]="['/administration/geozone/add']" *ngIf="authService.checkRights(currentstate.state,mode.Create)">Add new Geozone</button>
+    </div>
+
+    <div class="filtertext">
+        <input type="text" class="form-control" placeholder="Search">
+    </div>
+
+      <div class="table-responsive" style="margin-top:15px">
+              <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th class="text-center">Description (Address)</th>
+                  <th class="text-center">Zone Type</th>
+                  <th class="text-center">Arrival Zone</th>
+                  <th class="text-center">Depature Zone</th>
+                  <th class="text-center">Radius (meters)</th>
+                  <th class="text-center">Lat/Long (Center)</th>
+                  <th class="text-center" *ngIf="authService.checkRights(currentstate.state,mode.Edit) || authService.checkRights(currentstate.state,mode.Delete)">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of geozoneList| paginate: { itemsPerPage: 10, currentPage:objcurrentpage }">
+
+                  <td class="text-center">{{item.Id}}</td>
+                  <td class="text-center">{{item.Geozone_Description}}</td>
+                  <td class="text-center">{{item.GeozoneType}}</td>
+                  <td class="text-center">
+                      <div *ngIf="item.IsArrivalZone; else NotArrivalZone">
+                          <img src="../../../assets/images/custom/icon/done.png" width="25" height="25">
+                        </div>
+                        <ng-template #NotArrivalZone>
+                            <img src="../../../assets/images/custom/icon/icon_restricted.png" width="25" height="25">      
+                        </ng-template>
+                  </td>
+                  <td class="text-center">
+                      <div *ngIf="item.IsDepartureZone; else NotDepartureZone">
+                          <img src="../../../assets/images/custom/icon/done.png" width="25" height="25">
+                        </div>
+                        <ng-template #NotDepartureZone>
+                            <img src="../../../assets/images/custom/icon/icon_restricted.png" width="25" height="25">      
+                        </ng-template>
+                  </td>
+                  <td class="text-center">{{item.Radius}}</td>
+                  <td class="text-center">{{item.LatLong}}</td>
+
+                  <td class="text-center" *ngIf="authService.checkRights(currentstate.state,mode.Edit) || authService.checkRights(currentstate.state,mode.Delete)">
+                      <a class="text-default" [routerLink]="['/administration/geozone/edit',1,2]" *ngIf="authService.checkRights(currentstate.state,mode.Edit)" ><i class="icofont icofont-ui-edit f-20"></i></a>
+                      <a class="text-default" *ngIf="authService.checkRights(currentstate.state,mode.Delete)" ><i class="icofont icofont-ui-delete f-20"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+         <pagination-controls (pageChange)="objcurrentpage = $event"></pagination-controls>  
+          <!-- <pagination-controls  id="55"
+                (pageChange)="pageChanged($event)"
+                maxSize="9"
+                directionLinks="true"
+                autoHide="true"
+                responsive="true"
+                previousLabel="Previous"
+                nextLabel="Next"
+                screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page"
+                screenReaderCurrentLabel="You're on page">
+          </pagination-controls> -->
+
+  </app-card>
+</div>
+</div>

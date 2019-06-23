@@ -1,0 +1,174 @@
+<!-- <div class="page-header">
+  <div class="page-header-title">
+    <span><h3>Create User</h3></span>
+  </div>
+</div> -->
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="md-tabs">
+      <ngb-tabset [justify]="'fill'">
+        <ngb-tab title="Fleet Details">
+          <ng-template ngbTabContent>
+            <div class="m-t-15">
+              <!-- personal card start -->
+              <div class="card">
+                  <div class="card-header">
+                      <h5 class="card-header-text">Fleet Details</h5>
+                    </div>
+                <div class="card-body">
+                    <form role="form" [formGroup]="fleetForm" (ngSubmit)="onSubmitClick()" novalidate>
+                  <!-- <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Fleet ID</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" placeholder="Fleet ID" readonly>
+                    </div>
+                  </div> -->
+
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Fleet Name</label>
+                    <div class="col-sm-10">
+                        <input type="hidden" class="form-control" formControlName="Id" name="Id" [(ngModel)]="objfleet.Id">
+                      <input type="text" class="form-control" placeholder="Fleet Name" formControlName="FleetName"placeholder="Fleet Name" name="FleetName" [(ngModel)]="objfleet.FleetName"
+                      [ngClass]="{'is-invalid': submited && fleetForm.controls.FleetName.errors}">
+                    <div class="messages text-danger" *ngIf="fleetForm.hasError('required', ['FleetName']) &&submited">
+                      Fleet name is required.
+                    </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Fleet Description</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" placeholder="Fleet Description"formControlName="FleetDescription"placeholder="Fleet Description" name="FleetDescription" [(ngModel)]="objfleet.FleetDescription"
+                      [ngClass]="{'is-invalid': submited && fleetForm.controls.FleetDescription.errors}">
+                    <div class="messages text-danger" *ngIf="fleetForm.hasError('required', ['FleetDescription']) &&submited">
+                      Fleet Description is required.
+                    </div>
+                    </div>
+                  </div>
+                 
+                  <div class="form-group row" style="float: right;padding: 15px;">
+                    <button class="btn btn-primary">Submit</button>
+                  </div>
+                    </form>
+                </div>
+                <!-- end of card-body -->
+              </div>
+              <!-- personal card end-->
+            </div>
+          </ng-template>
+        </ngb-tab>
+      
+        <ngb-tab title="Vehicle List">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-sm-12 col-md-4">
+                            <h5 class="card-header-text">Vehicle List</h5>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-sm-12 col-md-4">
+                        </div>
+                      </div>
+                  </div>   
+                  <form role="form"  (ngSubmit)="fnAssociatedvehicle()" novalidate>
+                   <div class="card-body">
+                      <div class="filtertext">
+                          <input type="text" class="form-control" placeholder="Search" name="strsearchAssociated" [(ngModel)]="strsearchAssociated">
+                        </div>
+                    <div class="table-responsive" style="margin-top:15px">
+                 
+                      <table class="table table-bordered table-striped">
+                        <thead>
+                          <tr>  
+                            <th class="text-center">Action</th>
+                            <th>Vehicle ID</th>
+                            <th>Vehicle Name</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let timeslot of vehicleList | filter : strsearchAssociated | paginate: { itemsPerPage: pageSize, currentPage: pageNo,totalItems: totalNumberOfRecordsAssociated }">
+                            <td>                               
+                                  <div class="checkbox-fade fade-in-primary">
+                                    <label>
+                                      <input type="checkbox" value="{{timeslot.Id}}" name="{{timeslot.Id}}"  [checked]="(Fleetstr && (-1 !== Fleetstr.indexOf(timeslot.Id)) ? 'checked' : '')" (change) ="SelectedVehicles($event)" />
+                                        <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                                    </label>
+                                  </div>
+                            </td>
+                            <td>{{timeslot.Id}}</td>
+                            <td>{{timeslot.VehicleDescription}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                   
+                    </div>
+                    <pagination-controls style="float: left;" (pageChange)="p = $event"></pagination-controls>
+                    <div class="form-group row" style="float: right;padding: 15px;">
+                      <button class="btn btn-primary">Associate vehicle to Fleet</button>
+                    </div>
+                  </div> </form>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Associated Vehicle With Fleet">
+              <ng-template ngbTabContent>
+                <div class="m-t-15">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-header-text">Associated Vehicle With Fleet</h5>
+                    </div>
+                    <form role="form"  (ngSubmit)="fnCurrentAssociatedvehicle()" novalidate>
+                    <div class="card-body">
+                        <div class="filtertext">
+                            <input type="text" class="form-control" placeholder="Search" name="strsearch" [(ngModel)]="strsearch">
+                          </div>
+                      <div class="table-responsive" style="margin-top:15px">
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                            <tr>
+                                <th class="text-center">Action</th>
+                              <th>Vehicle ID</th>
+                              <th>Vehicle Name</th>
+                     
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- <tr *ngFor="let item of objfleet.currentVehicleMembershipList  | filter : strsearch  | paginate: { itemsPerPage: pageSize, currentPage: pageNo,totalItems: totalNumberOfRecords }">
+                              <td>{{item.vehicleId}}</td>
+                              <td>{{item.vehicleName}}</td>
+                              <td class="text-center">
+                                  <a class="text-default" ><i class="icofont icofont-ui-delete f-20"></i></a>
+                              </td>
+                            </tr> -->
+                            <tr *ngFor="let item of associatedvehicleList | filter : strsearchAssociated | paginate: { itemsPerPage: pageSize, currentPage: pageNo,totalItems: totalNumberOfRecordsAssociated }">
+                                <td>                               
+                                      <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                          <input type="checkbox" value="{{item.Id}}" name="{{item.Id}}"  [checked]="(Fleetstr && (-1 !== Fleetstr.indexOf(item.Id)) ? 'checked' : '')" (change) ="CurrentSelectedVehicles($event)" />
+                                            <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                                        </label>
+                                      </div>
+                                </td>
+                                <td>{{item.Id}}</td>
+                                <td>{{item.VehicleDescription}}</td>
+                              </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                        <pagination-controls style="float: left;"  (pageChange)="p = $event"></pagination-controls>
+                      <div class="form-group row" style="float: right;padding: 15px;">
+                          <button class="btn btn-primary">Remove associate vehicle from Fleet</button>
+                        </div>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+</div>

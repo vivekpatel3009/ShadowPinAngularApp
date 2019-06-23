@@ -1,0 +1,99 @@
+ 
+<div class="row">
+<div class="col-sm-12">
+<app-card [title]="'Vehicle List'">
+ 
+    <div class="addbutton">
+        <button class="btn btn-primary" style="float: right;"  [routerLink]="['/administration/vehicle/add']" *ngIf="authService.checkRights(currentstate.state,mode.Create)">Add new vehicle</button>
+    </div>
+
+    <div class="filtertext">
+        <input type="text" class="form-control" placeholder="Search"name="strsearch" [(ngModel)]="strsearch">
+    </div>
+    
+      <div class="table-responsive" style="margin-top:15px">
+              <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th class="text-center">Fleet Name</th>
+                  <th class="text-center">Vehicle Name</th>
+                  <th class="text-center">Device ID</th>
+                  <th class="text-center">Vehicle Description</th>
+                  <th class="text-center">Carrier Type</th>
+                  <th class="text-center">Serial Number</th>
+                  <th class="text-center">Equipment Status</th>
+                  <th class="text-center">IsActive</th>
+                  <th class="text-center">SIM Phone Number</th>
+                  <th class="text-center">IMEI/ESN Number</th>
+                  <th class="text-center">Creation Date</th>
+                  <!-- <th class="text-center">Device Type</th> -->
+                  <th class="text-center" *ngIf="authService.checkRights(currentstate.state,mode.Edit) || authService.checkRights(currentstate.state,mode.Delete)">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of vehicleList|filter : strsearch   |  paginate: { itemsPerPage: pageSize, currentPage: pageNo,totalItems: totalNumberOfRecords  }">
+                  <td class="text-center">{{item.Id}}</td>
+                  <td class="text-center">{{item.FleetName}}</td>
+                  <td class="text-center">{{item.VehicleName}}</td>
+                  <td class="text-center">{{item.Id}}</td>
+                  <td class="text-center">{{item.VehicleDescription}}</td>
+                  <td class="text-center">{{item.EquipmentTypeText}}</td>
+                  <td class="text-center">{{item.SerialNumber}}</td>
+                  <td class="text-center">{{item.EquipmentStatus}}</td>
+                  <td class="text-center">{{item.IsActive}}</td>
+                  <td class="text-center">{{item.SIMPhoneNumber}}</td>  
+                  <td class="text-center">{{item.IMEIOrESN}}</td>  
+                  <td class="text-center" >{{item.CreationDate | date:'dd/MM/yyyy'}}</td>
+                  <td class="text-center" *ngIf="authService.checkRights(currentstate.state,mode.Edit) || authService.checkRights(currentstate.state,mode.Delete)">
+                      <a class="text-default" [routerLink]="['/administration/vehicle/edit',item.Id]" *ngIf="authService.checkRights(currentstate.state,mode.Edit)" ><i class="icofont icofont-ui-edit f-20"></i></a>
+                      <a class="text-default"  (click)="deleteAccount(item.Id)"  *ngIf="authService.checkRights(currentstate.state,mode.Delete)"><i class="icofont icofont-ui-delete f-20"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <div class="text-center" *ngIf="vehicleList.length==0">
+                <h5>
+                    <label class="label label-info">No Record found !</label>
+                </h5>
+              </div>
+              <div class="text-center"*ngIf="(vehicleList | filter: strsearch).length === 0 && vehicleList.length!=0 ">
+                  <h5>
+                      <label class="label label-info">No Match found !</label>
+                  </h5>
+                </div>
+            </div>
+            <label style="float:left; padding: 10px 10px 0 0;">Records Par Page</label>
+            <select name="select" (change)="pagesizechange($event.target.value)" class="form-control" style="float:left;width: 10%;padding-bottom: 10px">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <pagination-controls 
+            (pageChange)="pagechange($event)"
+            directionLinks="true"
+            responsive="true"
+            previousLabel="Previous"
+            nextLabel="Next"
+            screenReaderPaginationLabel="Pagination"
+            screenReaderPageLabel="page"
+            screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
+         <!-- <pagination-controls (pageChange)="objcurrentpage = $event"></pagination-controls>   -->
+          <!-- <pagination-controls  id="55"
+                (pageChange)="pageChanged($event)"
+                maxSize="9"
+                directionLinks="true"
+                autoHide="true"
+                responsive="true"
+                previousLabel="Previous"
+                nextLabel="Next"
+                screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page"
+                screenReaderCurrentLabel="You're on page">
+          </pagination-controls> -->
+
+  </app-card>
+</div>
+</div>

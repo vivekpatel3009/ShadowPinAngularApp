@@ -1,0 +1,216 @@
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="md-tabs">
+        <ngb-tabset [justify]="'fill'">
+          <ngb-tab title="Create User">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- personal card start -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-header-text">User</h5>
+                      </div>
+                  <div class="card-body">
+                    <!-- <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">User ID</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="User ID" readonly>
+                      </div>
+                    </div> -->
+                    <div class="row">
+                      
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-3 col-form-label">Account Name</label>
+                            <div class="col-sm-9 single-selection">
+                              <ngx-select [items]="DDList"
+                              optionValueField="item_id"
+                              optionTextField="item_text"
+                              placeholder="Select Account Name"
+                              [multiple]="false"
+                              [(ngModel)]="AccountId">
+                              </ngx-select>
+                            </div>
+                          </div>
+                          <div class="form-group col-sm-6">
+                              <label class="col-sm-3 col-form-label">User Role</label>
+                              <div class="col-sm-9 single-selection">
+                                <ngx-select [items]="DDList"
+                                optionValueField="item_id"
+                                optionTextField="item_text"
+                                placeholder="Select User Role"
+                                [multiple]="false"
+                                [(ngModel)]="RoleId">
+                                </ngx-select>
+                              </div>
+                            </div>
+
+                      <div class="form-group  col-sm-6">
+                        <label class="col-sm-3 col-form-label">First Name</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="First Name">
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Last Name</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Last Name">
+                        </div>
+                      </div>
+  
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Email</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Email">
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Phone</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Phone">
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Notify Email</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Notify Email">
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Description</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Account description">
+                        </div>
+                      </div>
+  
+  
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label">Time Zone</label>
+                        <div class="col-sm-9 single-selection">
+                          <ngx-select [items]="DDList"
+                          optionValueField="item_id"
+                          optionTextField="item_text"
+                          placeholder="Select Timezone"
+                          [multiple]="false"
+                          [(ngModel)]="TimeZoneId">
+                          </ngx-select>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label class="col-sm-3 col-form-label"> Fleets</label>
+                        <div class="col-sm-9 single-selection">
+                          <ngx-select [items]="DDList"
+                          optionValueField="item_id"
+                          optionTextField="item_text"
+                          placeholder="Select Fleets"
+                          [multiple]="true"
+                          [(ngModel)]="TimeZoneId1">
+                          </ngx-select>
+                        </div>
+                        <!-- <div class="col-sm-9">
+                          <ng-multiselect-dropdown [placeholder]="'Authorized Fleet'" [data]="DDList" [(ngModel)]="FleetId"
+                            [settings]="dropdownMultiSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                          </ng-multiselect-dropdown>
+                        </div> -->
+                      </div>
+                    </div>
+                    <div class="form-group row" style="float: right;padding: 15px;">
+                      <button class="btn btn-primary">Submit</button>
+                    </div>
+                  </div>
+                  <!-- end of card-body -->
+                </div>
+                <!-- personal card end-->
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <!-- <ngb-tab title="Vehicle">
+              <ng-template ngbTabContent>
+                  <div class="m-t-15">
+                      <div class="card">
+                          <div class="card-header">
+                              <h5 class="card-header-text">Vehicle</h5>
+                            </div>
+                          <div class="card-body">
+                        
+                              <div class="table-responsive" style="margin-top:15px">
+                                  <table class="table table-bordered table-striped">
+                                      <thead>
+                                      <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Vehicle Description</th>
+                                        <th class="text-center">SIM Phone Number</th>
+                                        <th class="text-center">Serial Number</th>
+                                        <th class="text-center">Creation Date</th>
+                                        <th class="text-center">Action</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                      <tr *ngFor="let item of vehiclelist | paginate: { itemsPerPage: 10, currentPage: objcurrentpage }">
+                                        <td class="text-center">{{item.Id}}</td>
+                                        <td class="text-center">{{item.VehicleDescription}}</td>
+                                        <td class="text-center">{{item.SIMPhoneNumber}}</td>
+                                        <td class="text-center">{{item.SerialNumber}}</td>
+                                        <td class="text-center" >{{item.CreationDate | date:'dd/MM/yyyy'}}</td>
+                                        <td class="text-center">
+                                            <a class="text-default" [routerLink]="['/administration/vehicle/edit',1,2]" ><i class="icofont icofont-ui-edit f-20"></i></a>
+                                            <a class="text-default" ><i class="icofont icofont-ui-delete f-20"></i></a>
+                                        </td>
+                                      </tr>
+                                      </tbody>
+                                    </table>
+                                </div>
+                    
+                             <pagination-controls (pageChange)="objcurrentpage = $event"></pagination-controls>  
+  
+  
+  
+                            </div>
+                      </div>
+                    </div>
+                  </ng-template>
+              </ngb-tab> 
+          
+              <ngb-tab title="Fleet">
+                  <ng-template ngbTabContent>
+                      <div class="m-t-15">
+                          <div class="card">
+                              <div class="card-header">
+                                  <h5 class="card-header-text">Fleet</h5>
+                                </div>
+                              <div class="card-body">
+                            
+                                  <div class="table-responsive" style="margin-top:15px">
+                                      <table class="table table-bordered table-striped">
+                                          <thead>
+                                          <tr>
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">Name</th>
+                                            <th class="text-center">Action</th>
+                                          </tr>
+                                          </thead>
+                                          <tbody>
+                                          <tr *ngFor="let item of fleetlist| paginate: { itemsPerPage: 10, currentPage: objcurrentpage }">
+                                            <td class="text-center">{{item.Id}}</td>
+                                            <td class="text-center">{{item.FleetName}}</td>
+                                            <td class="text-center">
+                                                <a class="text-default" [routerLink]="['/administration/fleet/edit',1,2]" ><i class="icofont icofont-ui-edit f-20"></i></a>
+                                                <a class="text-default" ><i class="icofont icofont-ui-delete f-20"></i></a>
+                                            </td>
+                                          </tr>
+                                          </tbody>
+                                        </table>
+                                    </div>
+                        
+                                 <pagination-controls (pageChange)="objcurrentpage = $event"></pagination-controls>  
+      
+      
+      
+                                </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                  </ngb-tab>  -->
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>

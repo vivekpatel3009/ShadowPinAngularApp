@@ -1,0 +1,156 @@
+<!-- <div class="page-header">
+  <div class="page-header-title">
+    <span><h3>Fleet List</h3></span>
+  </div>
+</div> -->
+
+<div class="row">
+
+  <div class="col-sm-12">
+    <app-card [title]="'Filter'">
+
+      <div class="row form-group">
+        <div class="col">
+          <label class="col-form-label">Fleet</label>
+        </div>
+        <div class="col-sm-4">
+          <ngx-select [items]="DDListforFleet" optionValueField="item_id" optionTextField="item_text"
+            placeholder="Select Fleet" [multiple]="false" [(ngModel)]="fleetId">
+          </ngx-select>
+        </div>
+        <div class="col-sm-2"></div>
+        <div class="col">
+          <label class="col-form-label">From</label>
+        </div>
+        <div class="col-sm-4">
+          <input class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="From Date Time">
+          <owl-date-time #dt1></owl-date-time>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col">
+          <label class="col-form-label">To</label>
+        </div>
+        <div class="col-sm-4">
+          <!-- <input class="form-control" type="datetime-local" /> -->
+          <input class="form-control" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="To Date Time">
+          <owl-date-time #dt2></owl-date-time>
+        </div>
+        <div class="col-sm-2"></div>
+        <div class="col">
+          <!-- <label class="col-form-label">Time Zone</label> -->
+        </div>
+        <div class="col-sm-4">
+          <!-- <ngx-select [items]="DDList" optionValueField="item_id" optionTextField="item_text"
+                  placeholder="Select Timezone" [multiple]="false" [(ngModel)]="TimezoneId">
+                </ngx-select> -->
+        </div>
+      </div>
+      <div class="form-group row" style="float: right;padding: 15px;">
+        <button class="btn btn-primary">Submit</button>
+      </div>
+      <!-- <div class="row form-group">
+          <div class="col">
+  
+          </div>
+          <div class="col-sm-4">
+            <div class="form-radio">
+              <div class="radio radio-inline">
+                <label>
+                  <input type="radio" name="radio" checked="checked">
+                  <i class="helper"></i>
+                  Event Detail
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2"></div>
+  
+          <div class="col">
+  
+          </div>
+          <div class="col-sm-4">
+            <div class="form-radio">
+              <div class="radio radio-inline">
+                <label>
+                  <input type="radio" name="radio">
+                  <i class="helper"></i>
+                  Event Detail (All Field)
+                </label>
+              </div>
+            </div>
+          </div>
+        </div> -->
+    </app-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [title]="'Fleet Map'">
+
+      <div class="form-group" style="float:right">
+        <div class="col-sm-2" style="margin-right: 30px;">
+          <button class="btn btn-primary">Update</button>
+        </div>
+        <div class="col-sm-2" style="margin-right: 30px;">
+          <button class="btn btn-primary">Last</button>
+        </div>
+        <div class="col-sm-2" style="margin-right: 30px;">
+          <button class="btn btn-primary">Auto</button>
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+          <agm-polyline (lineClick)="lineClick($event)" [strokeColor]="'red'" [strokeOpacity]="1">
+            <agm-polyline-point *ngFor="let item of location" [latitude]="item.lat" [longitude]="item.lng" color="red">
+            </agm-polyline-point>
+          </agm-polyline>
+        </agm-map>
+      </div>
+    </app-card>
+  </div>
+
+  <div class="col-sm-12">
+    <app-card [title]="'Fleet Mapping Detail'">
+      <div class="table-responsive" style="margin-top:15px">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th class="text-center">#</th>
+              <th class="text-center">Vehicle</th>
+              <th class="text-center">Date & Time</th>
+              <th class="text-center">Status</th>
+              <th class="text-center">Lat/Long</th>
+              <th class="text-center">Mph</th>
+              <th class="text-center">Address</th>
+              <th class="text-center">Last Battery Level</th>
+              <!-- <th class="text-center">Action</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of fleetMappingReportList| paginate: { itemsPerPage: 10, currentPage: objcurrentPage }">
+              <td class="text-center">{{item.Id}}</td>
+              <td class="text-center">{{item.VehicleDescription}}</td>
+              <td class="text-center">{{item.CreationDate}}</td>
+              <td class="text-center">{{item.Status}}</td>
+              <td class="text-center">{{item.LatLong}}</td>
+              <td class="text-center">{{item.Mph}}</td>
+              <td class="text-center">{{item.Address}}</td>
+              <td class="text-center">{{item.BatteryLevel}} %</td>
+              <!-- <td class="text-center">
+                <a class="text-default" [routerLink]="['/administration/account/edit',1,2]"><i
+                    class="icofont icofont-ui-edit f-20"></i></a>
+                <a class="text-default"><i class="icofont icofont-ui-delete f-20"></i></a>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <pagination-controls (pageChange)="objcurrentPage = $event"></pagination-controls>
+    </app-card>
+  </div>
+</div>
